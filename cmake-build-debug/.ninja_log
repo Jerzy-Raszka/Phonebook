@@ -1,0 +1,6 @@
+# ninja log v6
+1	459	7520189334502012	CMakeFiles/Phonebook.dir/src/main.cpp.obj	cadad2af81a5d3de
+462	570	7520189339095861	Phonebook.exe	cc2bc9ecfa2fdc3d
+10	465	7520195321314602	CMakeFiles/Phonebook.dir/src/ContactData.cpp.obj	c5a2f268b86ea6db
+6	528	7520195321274706	CMakeFiles/Phonebook.dir/src/main.cpp.obj	cadad2af81a5d3de
+528	710	7520195326495453	Phonebook.exe	e47f9d18c9054f00
