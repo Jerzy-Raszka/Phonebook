@@ -29,3 +29,8 @@
 /cmake-build-debug/build.ninja
 /cmake-build-debug/cmake_install.cmake
 /cmake-build-debug/CMakeCache.txt
+/cmake-build-debug/CMakeFiles/Phonebook.dir/src/ContactData.cpp.obj
+/cmake-build-debug/CMakeFiles/Phonebook.dir/src/main.cpp.obj
+/cmake-build-debug/.ninja_deps
+/cmake-build-debug/.ninja_log
+/cmake-build-debug/Phonebook.exe
