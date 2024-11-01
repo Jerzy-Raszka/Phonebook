@@ -13,17 +13,17 @@ int main()
     const auto y = ContactData("Adam", "Raszka", "669114472");
     contacts.push_front(y);
     const auto z = ContactData("Romek", "Raszka", "669114472");
-
     contacts.emplace_back("Bartek", "Raszka", "669114472");
 
     if (const auto it = std::ranges::find_if(contacts,
                                              [&](ContactData const& p)
                                              {
-                                                 return p.name == "Jerzy";
+                                                 return p.name == "Kamil";
                                              }); it != contacts.end())
     {
         contacts.insert(it, z);
     }
+    else{contacts.push_front(z);}
 
     for (const auto& n : contacts)
     {
