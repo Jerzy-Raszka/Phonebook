@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <list>
+#include <algorithm>
 #include "../include/ContactData.h"
 
 int main()
@@ -15,16 +16,18 @@ int main()
 
     contacts.emplace_back("Bartek", "Raszka", "669114472");
 
+    if (const auto it = std::ranges::find_if(contacts,
+                                             [&](ContactData const& p)
+                                             {
+                                                 return p.name == "Jerzy";
+                                             }); it != contacts.end())
+    {
+        contacts.insert(it, z);
+    }
 
     for (const auto& n : contacts)
     {
         std::cout << n.name << std::endl;
-    }
-
-    //How to find pos of element with matching object name
-    if (auto it = std::find(contacts.begin(), contacts.end(), name == "Jerzy"); it != contacts.end())
-    {
-        contacts.insert(it, z);
     }
 
     return 0;
