@@ -18,7 +18,6 @@ public:
     std::string name;
     std::string lastname;
     std::string phoneNumber;
-    ContactData* next;
 
     ContactData(const std::string& name, const std::string& lastname, const std::string& phoneNumber);
 };
