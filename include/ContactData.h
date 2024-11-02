@@ -6,18 +6,22 @@
 #define CONTACTDATA_H
 
 
-
 #include <string>
-class ContactData {
+#include <list>
+#include <memory>
+
+
+class ContactData
+{
 public:
+    static std::list<std::shared_ptr<ContactData>> contacts;
     std::string name;
     std::string lastname;
     std::string phoneNumber;
     ContactData* next;
 
-    ContactData(const std::string &name, const std::string &lastname, const std::string &phoneNumber);
+    ContactData(const std::string& name, const std::string& lastname, const std::string& phoneNumber);
 };
-
 
 
 #endif //CONTACTDATA_H
