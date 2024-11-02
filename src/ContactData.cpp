@@ -9,15 +9,25 @@ std::list<std::shared_ptr<ContactData>> ContactData::contacts;
 
 void addContact(const ContactData& addedContact)
 {
-    if (const auto it = std::ranges::find_if(ContactData::contacts, [&](const std::shared_ptr<ContactData>& contact)
+    if (ContactData::contacts.empty())
     {
-        return addedContact.name.compare(contact->name);
-    }); it != ContactData::contacts.end())
-    {
-        std::cout << *it << std::endl;
-        ContactData::contacts.insert(it, std::make_shared<ContactData>(addedContact));
+        ContactData::contacts.push_front(std::make_shared<ContactData>(addedContact));
     }
-    else { ContactData::contacts.push_back(std::make_shared<ContactData>(addedContact)); }
+    else
+    {
+        for (auto it = ContactData::contacts.begin(); it != ContactData::contacts.end(); ++it)
+        {
+            if (addedContact.name.compare((*it)->name) < 0)
+            {
+                ContactData::contacts.insert(it, std::make_shared<ContactData>(addedContact));
+                break;
+            }
+            if (it == ContactData::contacts.end()) //Check why this never happens
+            {
+                ContactData::contacts.push_back(std::make_shared<ContactData>(addedContact));
+            }
+        }
+    }
 }
 
 ContactData::ContactData(const std::string& name, const std::string& lastname, const std::string& phoneNumber)
