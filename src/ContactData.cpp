@@ -20,27 +20,29 @@ void addContact(const ContactData& addedContact)
     //TODO: name lowercase function better
     //TODO: name lower cased name better
     //TODO: do lower case for lastname too
-    bool wasAdded = false;
-    const auto newToLower = toLowerCase(addedContact.name);
+    bool isAdded = false;
+    const auto newNameToLower = toLowerCase(addedContact.name);
+    const auto newLastNameToLower = toLowerCase(addedContact.lastname);
 
     for (auto it = ContactData::contacts.begin(); it != ContactData::contacts.end(); ++it)
     {
-        auto existingToLower = toLowerCase((*it)->name);
+        auto currentNameToLower = toLowerCase((*it)->name);
+        auto currentLastNameToLower = toLowerCase((*it)->lastname);
 
-        if (newToLower.compare(existingToLower) < 0)
+        if (newNameToLower.compare(currentNameToLower) < 0)
         {
             ContactData::contacts.insert(it, std::make_shared<ContactData>(addedContact));
-            wasAdded = true;
+            isAdded = true;
             break;
         }
-        if (newToLower == existingToLower && addedContact.lastname.compare((*it)->lastname) < 0)
+        if (newNameToLower == currentNameToLower && newLastNameToLower.compare(currentLastNameToLower) < 0)
         {
             ContactData::contacts.insert(it, std::make_shared<ContactData>(addedContact));
-            wasAdded = true;
+            isAdded = true;
             break;
         }
     }
-    if (!wasAdded)
+    if (!isAdded)
     {
         ContactData::contacts.push_back(std::make_shared<ContactData>(addedContact));
     }
