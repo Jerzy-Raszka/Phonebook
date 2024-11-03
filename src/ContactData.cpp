@@ -15,11 +15,8 @@ std::string toLowerCase(const std::string& str)
     return lowerStr;
 }
 
-void addContact(const ContactData& addedContact)
+void addContactAndSort(const ContactData& addedContact)
 {
-    //TODO: name lowercase function better
-    //TODO: name lower cased name better
-    //TODO: do lower case for lastname too
     bool isAdded = false;
     const auto newNameToLower = toLowerCase(addedContact.name);
     const auto newLastNameToLower = toLowerCase(addedContact.lastname);
@@ -55,5 +52,5 @@ ContactData::ContactData(const std::string& name, const std::string& lastname, c
     this->lastname = lastname;
     this->phoneNumber = phoneNumber;
 
-    addContact(*this);
+    addContactAndSort(*this);
 };
