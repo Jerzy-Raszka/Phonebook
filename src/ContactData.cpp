@@ -3,17 +3,37 @@
 //
 #include "../include/ContactData.h"
 
+#include <algorithm>
 #include <iostream>
 
 std::list<std::shared_ptr<ContactData>> ContactData::contacts;
 
+std::string toLowerCase(const std::string& str)
+{
+    std::string lowerStr = str;
+    std::ranges::transform(lowerStr, lowerStr.begin(), ::tolower);
+    return lowerStr;
+}
+
 void addContact(const ContactData& addedContact)
 {
-    //TODO: if name is the same check lastname
+    //TODO: name lowercase function better
+    //TODO: name lower cased name better
+    //TODO: do lower case for lastname too
     bool wasAdded = false;
+    const auto newToLower = toLowerCase(addedContact.name);
+
     for (auto it = ContactData::contacts.begin(); it != ContactData::contacts.end(); ++it)
     {
-        if (addedContact.name.compare((*it)->name) < 0)
+        auto existingToLower = toLowerCase((*it)->name);
+
+        if (newToLower.compare(existingToLower) < 0)
+        {
+            ContactData::contacts.insert(it, std::make_shared<ContactData>(addedContact));
+            wasAdded = true;
+            break;
+        }
+        if (newToLower == existingToLower && addedContact.lastname.compare((*it)->lastname) < 0)
         {
             ContactData::contacts.insert(it, std::make_shared<ContactData>(addedContact));
             wasAdded = true;
