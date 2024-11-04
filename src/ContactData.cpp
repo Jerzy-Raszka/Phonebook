@@ -45,6 +45,25 @@ void addContactAndSort(const ContactData& addedContact)
     }
 }
 
+void ContactData::searchContacts(const std::string& searchParam)
+{
+    auto searchResult = ContactData::contacts;
+
+    for(auto it = searchResult.begin(); it != searchResult.end(); ++it) {
+        auto fullname = toLowerCase((*it)->name + (*it)->lastname);
+
+        if(fullname.find(searchParam) == std::string::npos) {
+            it = searchResult.erase(it);
+            --it;
+        }
+    }
+    for (const auto& contact : searchResult)
+    {
+        std::cout << contact->name << " ";
+        std::cout << contact->lastname << " ";
+        std::cout << contact->phoneNumber << std::endl;
+    }
+}
 
 ContactData::ContactData(const std::string& name, const std::string& lastname, const std::string& phoneNumber)
 {
@@ -53,4 +72,5 @@ ContactData::ContactData(const std::string& name, const std::string& lastname, c
     this->phoneNumber = phoneNumber;
 
     addContactAndSort(*this);
+
 };

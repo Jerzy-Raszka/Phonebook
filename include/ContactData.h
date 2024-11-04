@@ -19,7 +19,10 @@ public:
     std::string lastname;
     std::string phoneNumber;
 
+    static void searchContacts(const std::string& searchParam);
+
     ContactData(const std::string& name, const std::string& lastname, const std::string& phoneNumber);
+
 };
 
 
