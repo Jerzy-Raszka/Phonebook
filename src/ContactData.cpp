@@ -50,9 +50,9 @@ void ContactData::searchContacts(const std::string& searchParam)
     auto searchResult = ContactData::contacts;
 
     for(auto it = searchResult.begin(); it != searchResult.end(); ++it) {
-        auto fullname = toLowerCase((*it)->name + (*it)->lastname);
+        auto fullData = toLowerCase((*it)->name + (*it)->lastname + (*it)->phoneNumber);
 
-        if(fullname.find(searchParam) == std::string::npos) {
+        if(fullData.find(searchParam) == std::string::npos) {
             it = searchResult.erase(it);
             --it;
         }
