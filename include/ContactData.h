@@ -19,10 +19,15 @@ public:
     std::string lastname;
     std::string phoneNumber;
 
+    static void printList(const std::list<std::shared_ptr<ContactData>>&);
+
+    bool operator==(const ContactData& other) const;
+
     static void searchContacts(const std::string& searchParam);
 
-    ContactData(const std::string& name, const std::string& lastname, const std::string& phoneNumber);
+    static void removeContact(const ContactData&);
 
+    ContactData(const std::string& name, const std::string& lastname, const std::string& phoneNumber);
 };
 
 

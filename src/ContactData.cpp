@@ -15,6 +15,8 @@ std::string toLowerCase(const std::string& str)
     return lowerStr;
 }
 
+
+
 void addContactAndSort(const ContactData& addedContact)
 {
     bool isAdded = false;
@@ -45,23 +47,38 @@ void addContactAndSort(const ContactData& addedContact)
     }
 }
 
+void ContactData::printList(const std::list<std::shared_ptr<ContactData>>& listToPrint) {
+    for (const auto & it : listToPrint) {
+        std::cout << it->name << " ";
+        std::cout << it->lastname << " ";
+        std::cout << it->phoneNumber << std::endl;
+    }
+    std::cout << std::endl;
+}
+
+bool ContactData::operator==(const ContactData &other) const {
+    return this->name == other.name && this->lastname == other.lastname && this->phoneNumber == other.phoneNumber;
+}
+
 void ContactData::searchContacts(const std::string& searchParam)
 {
     auto searchResult = ContactData::contacts;
 
     for(auto it = searchResult.begin(); it != searchResult.end(); ++it) {
-        auto fullData = toLowerCase((*it)->name + (*it)->lastname + (*it)->phoneNumber);
-
-        if(fullData.find(searchParam) == std::string::npos) {
+        if(auto fullData = toLowerCase((*it)->name + (*it)->lastname + (*it)->phoneNumber); fullData.find(searchParam) == std::string::npos) {
             it = searchResult.erase(it);
             --it;
         }
     }
-    for (const auto& contact : searchResult)
-    {
-        std::cout << contact->name << " ";
-        std::cout << contact->lastname << " ";
-        std::cout << contact->phoneNumber << std::endl;
+    printList(searchResult);
+}
+
+void ContactData::removeContact(const ContactData& contactToRemove) {
+    for(auto it = ContactData::contacts.begin(); it != ContactData::contacts.end(); ++it) {
+        if (**it == contactToRemove) {
+            contacts.erase(it);
+            break;
+        }
     }
 }
 
