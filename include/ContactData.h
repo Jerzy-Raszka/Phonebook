@@ -27,6 +27,10 @@ public:
 
     static void removeContact(const ContactData&);
 
+    void serialize(const std::string& filename) const;
+
+    static void deserialize(const std::string& filename);
+
     ContactData(const std::string& name, const std::string& lastname, const std::string& phoneNumber);
 };
 

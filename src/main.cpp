@@ -12,10 +12,20 @@ int main()
 
     ContactData::printList(ContactData::contacts);
 
-    ContactData::searchContacts("777");
-    ContactData::removeContact(con3);
+    //ContactData::searchContacts("777");
+    //ContactData::removeContact(con3);
 
     ContactData::printList(ContactData::contacts);
+
+    con5.serialize("data.bin");
+    con4.serialize("data.bin");
+    con1.serialize("data.bin");
+
+    //ontactData::deserialize("data.bin");
+
+
+
+
 
     return 0;
 }

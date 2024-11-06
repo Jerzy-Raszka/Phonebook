@@ -4,6 +4,7 @@
 #include "../include/ContactData.h"
 
 #include <algorithm>
+#include <fstream>
 #include <iostream>
 
 std::list<std::shared_ptr<ContactData>> ContactData::contacts;
@@ -80,6 +81,68 @@ void ContactData::removeContact(const ContactData& contactToRemove) {
             break;
         }
     }
+}
+
+void ContactData::serialize(const std::string& filename) const {
+    std::ofstream file(filename, std::ios::binary | std::ios::app);
+    if (!file.is_open()) {
+        std::cerr << "Error: Failed to open file for writing." << std::endl;
+        return;
+    }
+
+    const size_t nameLength = name.size();
+    file.write(reinterpret_cast<const char*>(&nameLength), sizeof(nameLength));
+    file.write(name.c_str(), static_cast<std::streamsize>(nameLength));
+
+    const size_t lastnameLength = lastname.size();
+    file.write(reinterpret_cast<const char*>(&lastnameLength), sizeof(lastnameLength));
+    file.write(lastname.c_str(), static_cast<std::streamsize>(lastnameLength));
+
+    const size_t phoneNumberLength = phoneNumber.size();
+    file.write(reinterpret_cast<const char*>(&phoneNumberLength), sizeof(phoneNumberLength));
+    file.write(phoneNumber.c_str(), static_cast<std::streamsize>(phoneNumberLength));
+
+    file.close();
+    std::cout << "Object serialized and added to file successfully." << std::endl;
+}
+
+void ContactData::deserialize(const std::string& filename) {
+    std::ifstream file(filename, std::ios::binary);
+    if (!file.is_open()) {
+        std::cerr << "Error: Failed to open file for reading." << std::endl;
+        return;
+    }
+
+    while (file.peek() != EOF) {
+        size_t nameLength;
+        file.read(reinterpret_cast<char*>(&nameLength), sizeof(nameLength));
+        const auto nameBuffer = new char[nameLength + 1];
+        file.read(nameBuffer, static_cast<std::streamsize>(nameLength));
+        nameBuffer[nameLength] = '\0';
+        std::string name(nameBuffer);
+        delete[] nameBuffer;
+
+        size_t lastnameLength;
+        file.read(reinterpret_cast<char*>(&lastnameLength), sizeof(lastnameLength));
+        const auto lastnameBuffer = new char[lastnameLength + 1];
+        file.read(lastnameBuffer, static_cast<std::streamsize>(lastnameLength));
+        lastnameBuffer[lastnameLength] = '\0';
+        std::string lastname(lastnameBuffer);
+        delete[] lastnameBuffer;
+
+        size_t phonenumberLength;
+        file.read(reinterpret_cast<char*>(&phonenumberLength), sizeof(phonenumberLength));
+        const auto phoneBuffer = new char[phonenumberLength + 1];
+        file.read(phoneBuffer, static_cast<std::streamsize>(phonenumberLength));
+        phoneBuffer[phonenumberLength] = '\0';
+        std::string phonenumber(phoneBuffer);
+        delete[] phoneBuffer;
+
+        addContactAndSort(ContactData(name, lastname, phonenumber));
+    }
+
+    file.close();
+    std::cout << "Objects deserialized successfully." << std::endl;
 }
 
 ContactData::ContactData(const std::string& name, const std::string& lastname, const std::string& phoneNumber)
