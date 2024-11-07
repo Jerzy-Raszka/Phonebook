@@ -11,27 +11,26 @@
 #include <memory>
 
 
-class ContactData
-{
+class ContactData {
 public:
-    static std::list<std::shared_ptr<ContactData>> contacts;
+    static std::list<std::shared_ptr<ContactData> > contacts;
     std::string name;
     std::string lastname;
     std::string phoneNumber;
 
-    static void printList(const std::list<std::shared_ptr<ContactData>>&);
+    static void printList(const std::list<std::shared_ptr<ContactData> > &);
 
-    bool operator==(const ContactData& other) const;
+    bool operator==(const ContactData &other) const;
 
-    static void searchContacts(const std::string& searchParam);
+    static void searchContacts(const std::string &searchParam);
 
-    static void removeContact(const ContactData&);
+    static void removeContact(const ContactData &);
 
-    void serialize(const std::string& filename) const;
+    static void serialize(const std::string &filename);
 
-    static void deserialize(const std::string& filename);
+    static void deserialize(const std::string &filename);
 
-    ContactData(const std::string& name, const std::string& lastname, const std::string& phoneNumber);
+    ContactData(const std::string &name, const std::string &lastname, const std::string &phoneNumber);
 };
 
 

@@ -75,25 +75,26 @@ void ContactData::removeContact(const ContactData &contactToRemove) {
     }
 }
 
-void ContactData::serialize(const std::string &filename) const {
-    std::ofstream file(filename, std::ios::binary | std::ios::app);
-    if (!file.is_open()) {
-        std::cerr << "Error: Failed to open file for writing." << std::endl;
-        return;
+void ContactData::serialize(const std::string &filename) {
+    std::ofstream file(filename, std::ios::binary);
+    for (auto it = ContactData::contacts.begin(); it != ContactData::contacts.end(); ++it) {
+        if (!file.is_open()) {
+            std::cerr << "Error: Failed to open file for writing." << std::endl;
+            return;
+        }
+
+        const size_t nameLength = (*it)->name.size();
+        file.write(reinterpret_cast<const char *>(&nameLength), sizeof(nameLength));
+        file.write((*it)->name.c_str(), static_cast<std::streamsize>(nameLength));
+
+        const size_t lastnameLength = (*it)->lastname.size();
+        file.write(reinterpret_cast<const char *>(&lastnameLength), sizeof(lastnameLength));
+        file.write((*it)->lastname.c_str(), static_cast<std::streamsize>(lastnameLength));
+
+        const size_t phoneNumberLength = (*it)->phoneNumber.size();
+        file.write(reinterpret_cast<const char *>(&phoneNumberLength), sizeof(phoneNumberLength));
+        file.write((*it)->phoneNumber.c_str(), static_cast<std::streamsize>(phoneNumberLength));
     }
-
-    const size_t nameLength = name.size();
-    file.write(reinterpret_cast<const char *>(&nameLength), sizeof(nameLength));
-    file.write(name.c_str(), static_cast<std::streamsize>(nameLength));
-
-    const size_t lastnameLength = lastname.size();
-    file.write(reinterpret_cast<const char *>(&lastnameLength), sizeof(lastnameLength));
-    file.write(lastname.c_str(), static_cast<std::streamsize>(lastnameLength));
-
-    const size_t phoneNumberLength = phoneNumber.size();
-    file.write(reinterpret_cast<const char *>(&phoneNumberLength), sizeof(phoneNumberLength));
-    file.write(phoneNumber.c_str(), static_cast<std::streamsize>(phoneNumberLength));
-
     file.close();
     std::cout << "Object serialized and added to file successfully." << std::endl;
 }

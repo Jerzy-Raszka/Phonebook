@@ -13,7 +13,7 @@ void createContact() {
     std::cout << "Please input phonenumber:" << std::endl;
     std::getline(std::cin, phonenumber);
 
-    ContactData(name, lastname, phonenumber).serialize("data.bin");
+    ContactData(name, lastname, phonenumber);
 }
 
 void searchInput() {
@@ -76,6 +76,7 @@ int main() {
                 searchInput();
                 break;
             case '5':
+                ContactData::serialize("data.bin");
                 running = false;
                 break;
             default:
